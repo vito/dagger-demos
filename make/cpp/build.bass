@@ -1,0 +1,14 @@
+#!/usr/bin/env bass
+
+(defn build [src]
+  (from (linux/debian :stable)
+    ($ apt-get update)
+    ($ apt-get install -y build-essential openssl curl libreadline-dev libpython-all-dev libperl-dev zlib1g-dev)
+    (cd src
+      ($ make postgresql))))
+
+(defn bin [src]
+  (subpath (build src) ./bin/))
+
+(defn main []
+  (emit (bin *dir*) *stdout*))
