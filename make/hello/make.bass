@@ -1,0 +1,10 @@
+#!/usr/bin/env bass
+
+(defn make [src task]
+  (from (linux/alpine)
+    ($ apk add make)
+    (cd src
+      ($ make $task))))
+
+(defn main [task]
+  (run (make *dir* task)))
